@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EllipticCurve.h" />
+    <ClInclude Include="Maths_helper.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="EllipticCurve.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maths_helper.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
