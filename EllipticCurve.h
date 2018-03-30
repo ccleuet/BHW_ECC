@@ -24,6 +24,7 @@ public:
 	void set_b(int b);
 
 	bool check_point(Point point);
+	Point get_inverse(Point point);
 	Point double_point(Point point);
 	Point add_point(Point p1, Point p2);
 	void calculate_points();
