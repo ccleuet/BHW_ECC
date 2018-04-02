@@ -1,1 +1,4 @@
-﻿  Elliptic $Curve.vcxproj -> C:\Users\Christophe\source\repos\Elliptic_Curve\Debug\Elliptic_Curve.exe
+﻿  Maths_helper.cpp
+c:\users\christophe\source\repos\elliptic_curve\elliptic $curve\maths_helper.cpp(60): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\christophe\source\repos\elliptic_curve\elliptic $curve\maths_helper.cpp(59): warning C4101: 'result' : variable locale non référencée
+  Elliptic $Curve.vcxproj -> C:\Users\Christophe\source\repos\Elliptic_Curve\Debug\Elliptic_Curve.exe

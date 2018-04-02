@@ -1,9 +1,14 @@
-#pragma once
 class Maths_helper
 {
 public:
 	Maths_helper();
-	int mul_inv(int n, int b);
-	int positive_modulo(int i, int n);
+
+	void addition(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void addition(unsigned char *out, unsigned char *in1, unsigned int n);
+
+	void multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void multiplication(unsigned char *out, unsigned char *in, unsigned int n);
+
+	void IntToHexa(unsigned char *out, unsigned int n);
 };
 

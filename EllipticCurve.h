@@ -6,27 +6,27 @@ class EllipticCurve
 {
 
 private:
-	int p;
-	int a;
-	int b;
+	unsigned char *p;
+	unsigned char *a;
+	unsigned char *b;
 
 public:
 	EllipticCurve();
-	EllipticCurve(int p, int a, int b);
+	EllipticCurve(unsigned char *p, unsigned char *a, unsigned char *b);
 	~EllipticCurve();
 
-	int get_a();
-	int get_b();
-	int get_p();
+	unsigned char*  get_a();
+	unsigned char*  get_b();
+	unsigned char*  get_p();
 
-	void set_p(int p);
-	void set_a(int a);
-	void set_b(int b);
+	void set_p(unsigned char *p);
+	void set_a(unsigned char *a);
+	void set_b(unsigned char *b);
 
-	bool check_point(Point point);
-	Point get_inverse(Point point);
-	Point double_point(Point point);
-	Point add_point(Point p1, Point p2);
+	//bool check_point(Point point);
+	//Point get_inverse(Point point);
+	//Point double_point(Point point);
+	//Point add_point(Point p1, Point p2);
 	void calculate_points();
 
 };

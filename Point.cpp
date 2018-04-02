@@ -10,44 +10,50 @@ Point::~Point()
 {
 }
 
-Point::Point(int x, int y, int z) {
+
+Point::Point(unsigned char *x, unsigned char *y) {
+	set_x(x);
+	set_y(y);
+}
+
+Point::Point(unsigned char *x, unsigned char *y, unsigned char *z) {
 	set_x(x);
 	set_y(y);
 	set_z(z);
 }
 
 
-int Point::get_x()
+char Point::get_x()
 {
-	return x;
+	return *x;
 }
 
-int Point::get_y()
+char Point::get_y()
 {
-	return y;
+	return *y;
 }
 
-int Point::get_z()
+char Point::get_z()
 {
-	return z;
+	return *z;
 }
 
-void Point::set_x(int x)
+void Point::set_x(unsigned char *x)
 {
 	this->x = x;
 }
 
-void Point::set_y(int y)
+void Point::set_y(unsigned char *y)
 {
 	this->y = y;
 }
 
-void Point::set_z(int z)
+void Point::set_z(unsigned char *z)
 {
 	this->z = z;
 }
 
 bool Point::isEqual(Point p)
 {
-	return (x == p.get_x()) && (y == p.get_y()) && (z == p.get_z());
+	return (*x == p.get_x()) && (*y == p.get_y()) && (*z == p.get_z());
 }
