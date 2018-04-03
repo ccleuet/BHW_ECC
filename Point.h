@@ -12,9 +12,9 @@ public:
 	Point(unsigned char *x, unsigned char *y);
 	Point(unsigned char *x, unsigned char *y, unsigned char *z);
 
-	char get_x();
-	char get_y();
-	char get_z();
+	unsigned char * get_x();
+	unsigned char * get_y();
+	unsigned char * get_z();
 
 	void set_x(unsigned char *x);
 	void set_y(unsigned char *y);

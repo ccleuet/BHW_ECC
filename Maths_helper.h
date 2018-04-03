@@ -13,14 +13,21 @@ public:
 	void addition(unsigned char *out, unsigned char *in1, unsigned char *in2);
 	void addition(unsigned char *out, unsigned char *in1, unsigned int n);
 
-	void soustraction(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void soustraction_10(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void soustraction_20(unsigned char *out, unsigned char *in1, unsigned char *in2);
 
 	void multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2);
-	void multiplication(unsigned char *out, unsigned char *in, unsigned int n);
+	void multiplication(unsigned char *out, unsigned char *in, int n);
 
-	void IntToHexa(unsigned char *out, unsigned int n);
-	bool Is_Greater(unsigned char *in1, unsigned char *in2);
-	void Shift_left(unsigned char *in, unsigned int n);
-	void Init(unsigned char *in);
+	void modulo_10(unsigned char *in);
+	void modulo_20(unsigned char *in);
+
+	void intToHexa(unsigned char *out, unsigned int n);
+	bool is_Greater(unsigned char *in1, unsigned char *in2, int n);
+	void shift_left(unsigned char *in, unsigned int n);
+	void init(unsigned char *in, int n);
+
+	void tenTo_20hexa(unsigned char *out, unsigned char *in);
+	void twentyTo_10hexa(unsigned char *out, unsigned char *in);
 };
 

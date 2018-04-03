@@ -1,5 +1,2 @@
-﻿  Maths_helper.cpp
-c:\users\christophe\source\repos\elliptic_curve\elliptic $curve\maths_helper.cpp(96): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\christophe\source\repos\elliptic_curve\elliptic $curve\maths_helper.cpp(95): warning C4101: 'result' : variable locale non référencée
-c:\users\christophe\source\repos\elliptic_curve\elliptic $curve\maths_helper.cpp(142): warning C4715: 'Maths_helper::Is_Greater' : les chemins de contrôle ne retournent pas tous une valeur
+﻿  main.cpp
   Elliptic $Curve.vcxproj -> C:\Users\Christophe\source\repos\Elliptic_Curve\Debug\Elliptic_Curve.exe

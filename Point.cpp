@@ -10,7 +10,6 @@ Point::~Point()
 {
 }
 
-
 Point::Point(unsigned char *x, unsigned char *y) {
 	set_x(x);
 	set_y(y);
@@ -23,19 +22,19 @@ Point::Point(unsigned char *x, unsigned char *y, unsigned char *z) {
 }
 
 
-char Point::get_x()
+unsigned char * Point::get_x()
 {
-	return *x;
+	return x;
 }
 
-char Point::get_y()
+unsigned char * Point::get_y()
 {
-	return *y;
+	return y;
 }
 
-char Point::get_z()
+unsigned char * Point::get_z()
 {
-	return *z;
+	return z;
 }
 
 void Point::set_x(unsigned char *x)
@@ -55,5 +54,5 @@ void Point::set_z(unsigned char *z)
 
 bool Point::isEqual(Point p)
 {
-	return (*x == p.get_x()) && (*y == p.get_y()) && (*z == p.get_z());
+	return (x == p.get_x()) && (y == p.get_y()) && (z == p.get_z());
 }

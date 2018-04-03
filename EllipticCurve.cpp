@@ -48,13 +48,26 @@ void EllipticCurve::set_b(unsigned char *b)
 	this->b = b;
 }
 
-//bool EllipticCurve::check_point(Point point) {
-//
-//	char x = point.get_x();
-//	char y = point.get_y();
-//
-//	return (y*y) % p == (x*x*x ^ a * x + b) % p;
-//}
+bool EllipticCurve::check_point(Point point) {
+
+	unsigned char *xp = point.get_x();
+	unsigned char *yp = point.get_y();
+
+	unsigned char x[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+	unsigned char y[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+
+	for (int i = 0; i < 10; i++) {
+		x[i] = xp[i];
+		y[i] = yp[i];
+	}
+
+	unsigned char left[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+	unsigned char right[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+
+	equation(left, right, x, y);
+
+	return (left == right);
+}
 
 //Point EllipticCurve::double_point(Point point) {
 //	return add_point(point, point);
@@ -86,5 +99,27 @@ void EllipticCurve::set_b(unsigned char *b)
 //}
 
 void EllipticCurve::calculate_points() {
+}
+
+
+void EllipticCurve::equation(unsigned char *left, unsigned char *right, unsigned char *x, unsigned char *y) {
+
+	Maths_helper help = Maths_helper(p);
+	//y^2
+	help.multiplication(right, y, y);
+
+	//x^3 + a * x + b;
+	unsigned char x_2[10];
+	help.multiplication(x_2, x, x);
+
+	unsigned char x_3[10];
+	help.multiplication(x_3, x_2, x);
+
+	unsigned char a_x[10];
+	help.multiplication(a_x, a, x);
+
+	unsigned char a_x_b[10];
+	help.addition(a_x_b, a_x, b);
+	help.addition(left, a_x_b, x_3);
 }
 
