@@ -13,6 +13,8 @@ Point::~Point()
 Point::Point(unsigned char *x, unsigned char *y) {
 	set_x(x);
 	set_y(y);
+	unsigned char z[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
+	set_z(z);
 }
 
 Point::Point(unsigned char *x, unsigned char *y, unsigned char *z) {

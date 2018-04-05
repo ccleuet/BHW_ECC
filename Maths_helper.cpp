@@ -81,9 +81,25 @@ void Maths_helper::soustraction_20(unsigned char *out, unsigned char *in1, unsig
 void Maths_helper::soustraction_10(unsigned char *out, unsigned char *in1, unsigned char *in2) {
 	unsigned int temp = 0x00;
 	for (int i = 0; i < 10; i++) {
-		unsigned int result =in1[9 - i] - (in2[9 - i] + temp);
+		unsigned int result = in1[9 - i] - (in2[9 - i] + temp);
 		if (in1[9 - i] >= (in2[9 - i] + temp)) {
-			out[9 - i] =result;
+			out[9 - i] = result;
+			temp = 0x00;
+		}
+		else {
+			out[9 - i] = result;
+			temp = 0x01;
+		}
+	}
+}
+void Maths_helper::soustraction_10(unsigned char *out, unsigned char *in1, unsigned int n) {
+	unsigned int temp = 0x00; 
+	unsigned char n_hexa[10]; init(n_hexa, 10);
+	intToHexa(n_hexa, n);
+	for (int i = 0; i < 10; i++) {
+		unsigned int result = in1[9 - i] - (n_hexa[9 - i] + temp);
+		if (in1[9 - i] >= (n_hexa[9 - i] + temp)) {
+			out[9 - i] = result;
 			temp = 0x00;
 		}
 		else {
@@ -96,7 +112,6 @@ void Maths_helper::soustraction_10(unsigned char *out, unsigned char *in1, unsig
 void Maths_helper::multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2) {
 
 	unsigned char temp[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
-	unsigned char result[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
 
 	multiplication(out, in1, in2[9]);
 	for (int i = 1; i < 10; i++) {
@@ -151,13 +166,15 @@ void Maths_helper::intToHexa(unsigned char *out, unsigned int n)
 }
 
 bool Maths_helper::is_Greater(unsigned char *in1, unsigned char *in2, int n) {
-	bool result = false;
 	for (int i = 0; i < n; i++) {
 		if (in1[i] > in2[i]) {
 			return true;
 		}
+		else if (in1[i] < in2[i]) {
+			return false;
+		}
 	}
-	return result;
+	return false;
 }
 
 void Maths_helper::shift_left(unsigned char *in, unsigned int n)
@@ -203,7 +220,7 @@ void Maths_helper::twentyTo_10hexa(unsigned char *out, unsigned char *in) {
 
 void Maths_helper::modulo_10(unsigned char *in) {
 
-	unsigned char result[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+	unsigned char result[10]; init(result, 10);
 
 	for (int i = 0; i < 10; i++) {
 		result[i] = in[i];
@@ -218,9 +235,9 @@ void Maths_helper::modulo_10(unsigned char *in) {
 }
 
 void Maths_helper::modulo_20(unsigned char *in) {
-	
+
 	unsigned char result[20] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
-	unsigned char p_20[20]; tenTo_20hexa(p_20,this->get_p());
+	unsigned char p_20[20]; tenTo_20hexa(p_20, this->get_p());
 
 	for (int i = 0; i < 20; i++) {
 		result[i] = in[i];
@@ -231,5 +248,48 @@ void Maths_helper::modulo_20(unsigned char *in) {
 	}
 	for (int i = 0; i < 20; i++) {
 		in[i] = result[i];
+	}
+}
+
+
+bool Maths_helper::isEqual(unsigned char *in1, unsigned char *in2) {
+	for (int i = 0; i < 10; i++) {
+		if (in1[i] != in2[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Maths_helper::isNull(unsigned char *in) {
+	for (int i = 0; i < 10; i++) {
+		if (in[i] != 0x00) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void Maths_helper::division(unsigned char *out, unsigned char *in, int n) {
+
+	unsigned char n_hexa[10]; init(n_hexa, 10);
+	intToHexa(n_hexa, n);
+
+	unsigned char temp_01[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
+
+	unsigned char result[10]; init(result, 10);
+	unsigned char r[10]; init(r, 10);
+
+	for (int i = 0; i < 10; i++) {
+		result[i] = in[i];
+	}
+
+	while (is_Greater(result, n_hexa,10)) {
+		soustraction_10(result, result, n_hexa);
+		addition(r, r, temp_01);
+	}
+
+	for (int i = 0; i < 10; i++) {
+		out[i] = r[i];
 	}
 }

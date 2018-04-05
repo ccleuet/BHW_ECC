@@ -14,10 +14,14 @@ public:
 	void addition(unsigned char *out, unsigned char *in1, unsigned int n);
 
 	void soustraction_10(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void soustraction_10(unsigned char *out, unsigned char *in1, unsigned int n);
+
 	void soustraction_20(unsigned char *out, unsigned char *in1, unsigned char *in2);
 
 	void multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2);
 	void multiplication(unsigned char *out, unsigned char *in, int n);
+
+	void division(unsigned char *out, unsigned char *in, int n);
 
 	void modulo_10(unsigned char *in);
 	void modulo_20(unsigned char *in);
@@ -29,5 +33,8 @@ public:
 
 	void tenTo_20hexa(unsigned char *out, unsigned char *in);
 	void twentyTo_10hexa(unsigned char *out, unsigned char *in);
+
+	bool isEqual(unsigned char *in1, unsigned char *in2);
+	bool isNull(unsigned char *in);
 };
 
