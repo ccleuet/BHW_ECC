@@ -236,9 +236,21 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	//10
 	help.multiplication(temp_5, temp_5, temp_7);
 	//11
-	help.soustraction_10(temp_4, temp_1, temp_4);
+	if (help.is_Greater(temp_1, temp_4, 10)) {
+		help.soustraction_10(temp_4, temp_1, temp_4);
+	}
+	else {
+		help.soustraction_10(temp_4, temp_1, temp_4);
+		help.soustraction_10(temp_4, p, temp_4);
+	}
 	//12
-	help.soustraction_10(temp_5, temp_2, temp_5);
+	if (help.is_Greater(temp_2, temp_5, 10)) {
+		help.soustraction_10(temp_5, temp_2, temp_5);
+	}
+	else {
+		help.soustraction_10(temp_5, temp_2, temp_5);
+		help.soustraction_10(temp_5, p, temp_5);
+	}
 	//13
 	if (help.isEqual(temp_4, temp_00)) {
 		if (help.isEqual(temp_5, temp_00)) {
@@ -250,10 +262,22 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	}
 	//14
 	help.multiplication(temp, temp_1, 2);
-	help.soustraction_10(temp_1, temp, temp_4);
+	if (help.is_Greater(temp, temp_4, 10)) {
+		help.soustraction_10(temp_1, temp, temp_4);
+	}
+	else {
+		help.soustraction_10(temp_1, temp, temp_4);
+		help.soustraction_10(temp_1, p, temp_1);
+	}
 	//15
 	help.multiplication(temp, temp_2, 2);
-	help.soustraction_10(temp_2, temp, temp_5);
+	if (help.is_Greater(temp, temp_5, 10)) {
+		help.soustraction_10(temp_2, temp, temp_5);
+	}
+	else {
+		help.soustraction_10(temp_2, temp, temp_5);
+		help.soustraction_10(temp_2, p, temp_2);
+	}
     //16
 	for (int i = 0; i < 10; i++) {
 		temp[i] = z1[i];
@@ -272,20 +296,58 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	//21
 	help.multiplication(temp_1, temp_5, temp_5);
 	//22
-	help.soustraction_10(temp_1, temp_1, temp_7);
+	if (help.is_Greater(temp_1, temp_7, 10)) {
+		help.soustraction_10(temp_1, temp_1, temp_7);
+	}
+	else {
+		help.soustraction_10(temp_1, temp_1, temp_7);
+		help.soustraction_10(temp_1, p, temp_1);
+	}
 	//23
 	help.multiplication(temp, temp_1, 2);
-	help.soustraction_10(temp_7, temp_7, temp);
+	if (help.is_Greater(temp_7, temp, 10)) {
+		help.soustraction_10(temp_7, temp_7, temp);
+	}
+	else {
+		help.soustraction_10(temp_7, temp_7, temp);
+		help.soustraction_10(temp_7, p, temp_7);
+	}
 	//24
 	help.multiplication(temp_5, temp_5, temp_7);
 	//25
 	help.multiplication(temp_4, temp_2, temp_4);
 	//26
-	help.soustraction_10(temp_2, temp_5, temp_4);
+	if (help.is_Greater(temp_5, temp_4, 10)) {
+		help.soustraction_10(temp_2, temp_5, temp_4);
+	}
+	else {
+		help.soustraction_10(temp_2, temp_5, temp_4);
+		help.soustraction_10(temp_2, p, temp_2);
+	}
 	//27
-	help.division(temp_2, temp_2, 2);
+	help.modular_division(temp_2, temp_2, 2);
 	//28-29-30
-	return Point(temp_1, temp_2, temp_3);
+	return toAffine(temp_1, temp_2, temp_3);
+}
+
+Point EllipticCurve::toAffine(unsigned char *x, unsigned char *y, unsigned char *z) {
+
+	Maths_helper help = Maths_helper(p);
+
+	unsigned char temp_x[10]; help.init(temp_x, 10);
+	unsigned char temp_y[10]; help.init(temp_y, 10);
+	unsigned char temp_z[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
+
+	unsigned char temp_z2[10]; help.init(temp_z2, 10);
+	unsigned char temp_z3[10]; help.init(temp_z3, 10);
+
+	help.multiplication(temp_z2, z, z);
+	help.multiplication(temp_z3, temp_z2, z);
+
+	help.modular_division(temp_x, x, temp_z2);
+	help.modular_division(temp_y, y, temp_z3);
+	
+	return Point(temp_x, temp_y, temp_z);
 }
 
 void EllipticCurve::calculate_points() {

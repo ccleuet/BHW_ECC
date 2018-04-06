@@ -21,10 +21,17 @@ public:
 	void multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2);
 	void multiplication(unsigned char *out, unsigned char *in, int n);
 
-	void division(unsigned char *out, unsigned char *in, int n);
+	void modular_division(unsigned char *out, unsigned char *in, int n);
+	void modular_division(unsigned char *out, unsigned char *in1, unsigned char *in2);
+
+	void division(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void division(unsigned char *out, unsigned char *in1, unsigned int n);
 
 	void modulo_10(unsigned char *in);
 	void modulo_20(unsigned char *in);
+
+	void modular_inverse(unsigned char *out, unsigned char *in);
+	void modular_inverse(unsigned char *out, int n);
 
 	void intToHexa(unsigned char *out, unsigned int n);
 	bool is_Greater(unsigned char *in1, unsigned char *in2, int n);

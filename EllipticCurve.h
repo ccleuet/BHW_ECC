@@ -29,6 +29,7 @@ public:
 	Point add_point(Point p1, Point p2);
 
 	void calculate_points();
+	Point toAffine(unsigned char *x, unsigned char *y, unsigned char *z);
 
 	void equation(unsigned char *left, unsigned char *right, unsigned char *x, unsigned char *y);
 };
