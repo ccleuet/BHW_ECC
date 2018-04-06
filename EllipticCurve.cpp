@@ -52,21 +52,7 @@ void EllipticCurve::equation(unsigned char *left, unsigned char *right, unsigned
 
 	Maths_helper help = Maths_helper(p);
 
-	//unsigned char *pp = get_p();
-	//unsigned char *pa = get_a();
-	//unsigned char *pb = get_b();
-
-	//unsigned char p[10]; help.init(p, 10);
-	//unsigned char a[10]; help.init(a, 10);
-	//unsigned char b[10]; help.init(b, 10);
-
-	//for (int i = 0; i < 10; i++) {
-	//	p[i] = pp[i];
-	//	a[i] = pa[i];
-	//	b[i] = pb[i];
-	//}
-
-	//y^2
+    //y^2
 	help.multiplication(right, y, y);
 	help.modulo_10(right);
 
@@ -84,7 +70,7 @@ void EllipticCurve::equation(unsigned char *left, unsigned char *right, unsigned
 	help.addition(a_x_b, a_x, b);
 	help.addition(left, a_x_b, x_3);
 
-	help.modulo_10(left);
+	//help.modulo_10(left);
 }
 
 bool EllipticCurve::check_point(Point point) {
@@ -117,73 +103,100 @@ Point EllipticCurve::double_point(Point point) {
 	unsigned char *yp = point.get_y();
 	unsigned char *zp = point.get_z();
 
-	unsigned char temp_x[10]; help.init(temp_x, 10);
-	unsigned char temp_y[10]; help.init(temp_y, 10);
-	unsigned char temp_z[10]; help.init(temp_z, 10);
+	unsigned char temp_1[10]; help.init(temp_1, 10);
+	unsigned char temp_2[10]; help.init(temp_2, 10);
+	unsigned char temp_3[10]; help.init(temp_3, 10);
 
 	unsigned char temp_4[10]; help.init(temp_4, 10);
 	unsigned char temp_5[10]; help.init(temp_5, 10);
 
 	unsigned char temp[10]; help.init(temp, 10);
 
+	unsigned char temp_00[10]; help.init(temp_00, 10);
 	//1-2-3
 	for (int i = 0; i < 10; i++) {
-		temp_x[i] = xp[i];
-		temp_y[i] = yp[i];
-		temp_z[i] = zp[i];
+		temp_1[i] = xp[i];
+		temp_2[i] = yp[i];
+		temp_3[i] = zp[i];
 	}
 	//4
-	if (help.isNull(temp_y) || help.isNull(temp_z)) {
-		temp_x[9] = 0; temp_y[9] = 0;
-		return Point(temp_x, temp_y, temp_z);
+	if (help.isNull(temp_2) || help.isNull(temp_3)) {
+		help.init(temp_1, 10); help.init(temp_2, 10); help.init(temp_3, 10);
+		temp_1[9] = 1; temp_2[9] = 1;
+		return Point(temp_1, temp_2, temp_3);
 	}
 
 	unsigned char p_min_3[10]; help.init(p_min_3, 10);
 	help.soustraction_10(p_min_3, p, 3);
+
 	//5
 	if (help.isEqual(a, p_min_3)) {
-		help.multiplication(temp_4, temp_z, temp_z);
-		help.soustraction_10(temp_5, temp_x, temp_z);
-		help.addition(temp_4, temp_x, temp_4);
+		help.multiplication(temp_4, temp_3, temp_3);
+		if (help.is_Greater(temp_1, temp_4, 10)) {
+			help.soustraction_10(temp_5, temp_1, temp_4);
+		}
+		else {
+			help.soustraction_10(temp_5, temp_1, temp_4);
+			help.soustraction_10(temp_5, p, temp_5);
+		}
+		help.addition(temp_4, temp_1, temp_4);
 		help.multiplication(temp_5, temp_4, temp_5);
 		help.multiplication(temp_4, temp_5, 3);
 	}
 	else {
-		help.addition(temp_4, temp_4, a);
-		help.multiplication(temp_5, temp_z, temp_z);
+		help.addition(temp_4, temp_00, a);
+		help.multiplication(temp_5, temp_3, temp_3);
 		help.multiplication(temp_5, temp_5, temp_5);
 		help.multiplication(temp_5, temp_4, temp_5);
-		help.multiplication(temp_4, temp_x, temp_x);
+		help.multiplication(temp_4, temp_1, temp_1);
 		help.multiplication(temp_4, temp_4, 3);
 		help.addition(temp_4, temp_4, temp_5);
 	}
 	//6
-	help.multiplication(temp_z, temp_y, temp_z);
+	help.multiplication(temp_3, temp_2, temp_3);
 	//7
-	help.multiplication(temp_z, temp_z, 2);
+	help.multiplication(temp_3, temp_3, 2);
 	//8
-	help.multiplication(temp_y, temp_y, temp_y);
+	help.multiplication(temp_2, temp_2, temp_2);
 	//9	
-	help.multiplication(temp_5, temp_x, temp_y);
+	help.multiplication(temp_5, temp_1, temp_2);
 	//10
 	help.multiplication(temp_5, temp_4, temp_5);
 	//11
-	help.multiplication(temp_x, temp_4, temp_4);
+	help.multiplication(temp_1, temp_4, temp_4);
 	//12
 	help.multiplication(temp, temp_5, 2);
-	help.soustraction_10(temp_x, temp_x, temp);
+	if (help.is_Greater(temp_1, temp, 10)) {
+		help.soustraction_10(temp_1, temp_1, temp);
+	}
+	else {
+		help.soustraction_10(temp_1, temp_1, temp);
+		help.soustraction_10(temp_1, p, temp_1);
+	}
 	//13
-	help.multiplication(temp_y, temp_y, temp_y);
+	help.multiplication(temp_2, temp_2, temp_2);
 	//14
-	help.multiplication(temp_y, temp_y, 8);
+	help.multiplication(temp_2, temp_2, 8);
 	//15
-	help.soustraction_10(temp_5, temp_5, temp_x);
+	if (help.is_Greater(temp_5, temp_1, 10)) {
+		help.soustraction_10(temp_5, temp_5, temp_1);
+	}
+	else {
+		help.soustraction_10(temp_5, temp_5, temp_1);
+		help.soustraction_10(temp_5, p, temp_5);
+	}
 	//16
 	help.multiplication(temp_5, temp_4, temp_5);
 	//17
-	help.soustraction_10(temp_y, temp_5, temp_y);
+	if (help.is_Greater(temp_5, temp_2, 10)) {
+		help.soustraction_10(temp_2, temp_5, temp_2);
+	}
+	else {
+		help.soustraction_10(temp_2, temp_5, temp_2);
+		help.soustraction_10(temp_2, p, temp_2);
+	}
 	//18 -19 -20
-	return Point(temp_x, temp_y, temp_z);
+	return toAffine(temp_1, temp_2, temp_3);
 }
 
 Point EllipticCurve::add_point(Point p1, Point p2) {
