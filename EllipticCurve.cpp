@@ -70,7 +70,7 @@ void EllipticCurve::equation(unsigned char *left, unsigned char *right, unsigned
 	help.addition(a_x_b, a_x, b);
 	help.addition(left, a_x_b, x_3);
 
-	//help.modulo_10(left);
+	help.modulo_10(left);
 }
 
 bool EllipticCurve::check_point(Point point) {
@@ -92,7 +92,7 @@ bool EllipticCurve::check_point(Point point) {
 	unsigned char right[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
 	equation(left, right, x, y);
 
-	return help.isEqual(left, right);
+	return help.isEqual(left, right,10);
 }
 
 Point EllipticCurve::double_point(Point point) {
@@ -130,7 +130,7 @@ Point EllipticCurve::double_point(Point point) {
 	help.soustraction_10(p_min_3, p, 3);
 
 	//5
-	if (help.isEqual(a, p_min_3)) {
+	if (help.isEqual(a, p_min_3,10)) {
 		help.multiplication(temp_4, temp_3, temp_3);
 		if (help.is_Greater(temp_1, temp_4, 10)) {
 			help.soustraction_10(temp_5, temp_1, temp_4);
@@ -233,7 +233,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	unsigned char temp_00[10]; 	help.init(temp_00, 10);
 	unsigned char temp_01[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
 
-	if (!help.isEqual(temp_6, temp_01)) {
+	if (!help.isEqual(temp_6, temp_01,10)) {
 		help.addition(temp_6, temp_1, temp_6);
 		help.multiplication(temp_7, temp_6, temp_6);
 		help.multiplication(temp_1, temp_1, temp_7);
@@ -265,8 +265,8 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_5, p, temp_5);
 	}
 	//13
-	if (help.isEqual(temp_4, temp_00)) {
-		if (help.isEqual(temp_5, temp_00)) {
+	if (help.isEqual(temp_4, temp_00,10)) {
+		if (help.isEqual(temp_5, temp_00,10)) {
 			return Point(temp_00, temp_00, temp_00);
 		}
 		else {
@@ -295,7 +295,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	for (int i = 0; i < 10; i++) {
 		temp[i] = z1[i];
 	}
-	if (!help.isEqual(temp, temp_01)) {
+	if (!help.isEqual(temp, temp_01,10)) {
 		help.multiplication(temp_3, temp_3, temp_6);
 	}
 	//17
@@ -338,7 +338,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_2, p, temp_2);
 	}
 	//27
-	help.modular_division(temp_2, temp_2, 2);
+	help.division(temp_2, temp_2, 2);
 	//28-29-30
 	return toAffine(temp_1, temp_2, temp_3);
 }

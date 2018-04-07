@@ -41,7 +41,7 @@ public:
 	void tenTo_20hexa(unsigned char *out, unsigned char *in);
 	void twentyTo_10hexa(unsigned char *out, unsigned char *in);
 
-	bool isEqual(unsigned char *in1, unsigned char *in2);
+	bool isEqual(unsigned char *in1, unsigned char *in2, int n);
 	bool isNull(unsigned char *in);
 };
 

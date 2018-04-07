@@ -179,20 +179,17 @@ void Maths_helper::division(unsigned char *out, unsigned char *in1, unsigned cha
 	}
 }
 
-void Maths_helper::division(unsigned char *out, unsigned char *in, unsigned int n) {
-	unsigned char result[10]; init(result, 10);
-	unsigned char n_hexa[10]; intToHexa(n_hexa, n);
-
-	unsigned char temp[10]; init(temp, 10);
+void Maths_helper::division(unsigned char *out, unsigned char *in, unsigned int n)
+{
+	unsigned int temp = 0;
 	for (int i = 0; i < 10; i++) {
-		temp[i] = in[i];
-	}
-	while (is_Greater(temp, n_hexa, 10)) {
-		soustraction_10(temp, temp, n_hexa);
-		addition(result, result, 1);
-	}
-	for (int i = 0; i < 10; i++) {
-		out[i] = result[i];
+		temp = temp + in[i];
+		int q = temp / n;
+		int r = temp - q * n;
+		out[i] = q;
+		if (i != 9 && r>0) {
+			temp= 16*16*r;
+		}
 	}
 }
 
@@ -215,8 +212,11 @@ void Maths_helper::intToHexa(unsigned char *out, unsigned int n)
 }
 
 bool Maths_helper::is_Greater(unsigned char *in1, unsigned char *in2, int n) {
+	if (isEqual(in1, in2, n)) {
+		return true;
+	}
 	for (int j = 0; j < n; j++) {
-		if (in1[j] >= in2[j] && in1[j] > 0) {
+		if (in1[j] > in2[j]) {
 			return true;
 		}
 		else if (in1[j] < in2[j]) {
@@ -302,9 +302,8 @@ void Maths_helper::modulo_20(unsigned char *in) {
 	}
 }
 
-
-bool Maths_helper::isEqual(unsigned char *in1, unsigned char *in2) {
-	for (int i = 0; i < 10; i++) {
+bool Maths_helper::isEqual(unsigned char *in1, unsigned char *in2, int n) {
+	for (int i = 0; i < n; i++) {
 		if (in1[i] != in2[i]) {
 			return false;
 		}
@@ -343,7 +342,7 @@ void Maths_helper::modular_division(unsigned char *out, unsigned char *in1, unsi
 	unsigned char s2[10]; init(s2, 10);
 
 	//6
-	while (is_Greater(r1, temp_00, 10)) {
+	while (is_Greater(r1, temp_00, 10) && !isEqual(r1, temp_00, 10)) {
 		//6-1
 		division(q, r0, r1);
 
@@ -374,7 +373,7 @@ void Maths_helper::modular_division(unsigned char *out, unsigned char *in1, unsi
 		addition(s0, s1, temp_00);
 		addition(s1, s2, temp_00);
 	}
-	if (isEqual(r0, temp_01)) {
+	if (isEqual(r0, temp_01, 10)) {
 		for (int i = 0; i < 10; i++) {
 			out[i] = s0[i];
 		}
@@ -415,7 +414,7 @@ void Maths_helper::modular_inverse(unsigned char *out, int a) {
 	unsigned char r2[10]; init(r2, 10);
 	unsigned char s2[10]; init(s2, 10);
 	//6
-	while (is_Greater(r1, temp_00, 10)) {
+	while (is_Greater(r1, temp_00, 10) && !isEqual(r1, temp_00, 10)) {
 		//6-1
 		division(q, r0, r1);
 
@@ -446,7 +445,7 @@ void Maths_helper::modular_inverse(unsigned char *out, int a) {
 		addition(s0, s1, temp_00);
 		addition(s1, s2, temp_00);
 	}
-	if (isEqual(r0, temp_01)) {
+	if (isEqual(r0, temp_01, 10)) {
 		for (int i = 0; i < 10; i++) {
 			out[i] = s0[i];
 		}
