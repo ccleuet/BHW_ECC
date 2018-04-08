@@ -53,24 +53,21 @@ void EllipticCurve::equation(unsigned char *left, unsigned char *right, unsigned
 	Maths_helper help = Maths_helper(p);
 
     //y^2
-	help.multiplication(right, y, y);
-	help.modulo_10(right);
+	help.multiplication_10(right, y, y);
 
 	//x^3 + a * x + b;
 	unsigned char x_2[10]; help.init(x_2, 10);
-	help.multiplication(x_2, x, x);
+	help.multiplication_10(x_2, x, x);
 
 	unsigned char x_3[10]; help.init(x_3, 10);
-	help.multiplication(x_3, x_2, x);
+	help.multiplication_10(x_3, x_2, x);
 
 	unsigned char a_x[10]; help.init(a_x, 10);
-	help.multiplication(a_x, x, a);
+	help.multiplication_10(a_x, x, a);
 
 	unsigned char a_x_b[10]; help.init(a_x_b, 10);
-	help.addition(a_x_b, a_x, b);
-	help.addition(left, a_x_b, x_3);
-
-	help.modulo_10(left);
+	help.addition_10(a_x_b, a_x, b);
+	help.addition_10(left, a_x_b, x_3);
 }
 
 bool EllipticCurve::check_point(Point point) {
@@ -88,8 +85,8 @@ bool EllipticCurve::check_point(Point point) {
 		y[i] = yp[i];
 	}
 
-	unsigned char left[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
-	unsigned char right[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00 };
+	unsigned char left[10]; help.init(left, 10);
+	unsigned char right[10]; help.init(right, 10);
 	equation(left, right, x, y);
 
 	return help.isEqual(left, right,10);
@@ -131,7 +128,7 @@ Point EllipticCurve::double_point(Point point) {
 
 	//5
 	if (help.isEqual(a, p_min_3,10)) {
-		help.multiplication(temp_4, temp_3, temp_3);
+		help.multiplication_10(temp_4, temp_3, temp_3);
 		if (help.is_Greater(temp_1, temp_4, 10)) {
 			help.soustraction_10(temp_5, temp_1, temp_4);
 		}
@@ -139,33 +136,33 @@ Point EllipticCurve::double_point(Point point) {
 			help.soustraction_10(temp_5, temp_1, temp_4);
 			help.soustraction_10(temp_5, p, temp_5);
 		}
-		help.addition(temp_4, temp_1, temp_4);
-		help.multiplication(temp_5, temp_4, temp_5);
-		help.multiplication(temp_4, temp_5, 3);
+		help.addition_10(temp_4, temp_1, temp_4);
+		help.multiplication_10(temp_5, temp_4, temp_5);
+		help.multiplication_10(temp_4, temp_5, 3);
 	}
 	else {
-		help.addition(temp_4, temp_00, a);
-		help.multiplication(temp_5, temp_3, temp_3);
-		help.multiplication(temp_5, temp_5, temp_5);
-		help.multiplication(temp_5, temp_4, temp_5);
-		help.multiplication(temp_4, temp_1, temp_1);
-		help.multiplication(temp_4, temp_4, 3);
-		help.addition(temp_4, temp_4, temp_5);
+		help.addition_10(temp_4, temp_00, a);
+		help.multiplication_10(temp_5, temp_3, temp_3);
+		help.multiplication_10(temp_5, temp_5, temp_5);
+		help.multiplication_10(temp_5, temp_4, temp_5);
+		help.multiplication_10(temp_4, temp_1, temp_1);
+		help.multiplication_10(temp_4, temp_4, 3);
+		help.addition_10(temp_4, temp_4, temp_5);
 	}
 	//6
-	help.multiplication(temp_3, temp_2, temp_3);
+	help.multiplication_10(temp_3, temp_2, temp_3);
 	//7
-	help.multiplication(temp_3, temp_3, 2);
+	help.multiplication_10(temp_3, temp_3, 2);
 	//8
-	help.multiplication(temp_2, temp_2, temp_2);
+	help.multiplication_10(temp_2, temp_2, temp_2);
 	//9	
-	help.multiplication(temp_5, temp_1, temp_2);
+	help.multiplication_10(temp_5, temp_1, temp_2);
 	//10
-	help.multiplication(temp_5,temp_5,4);
+	help.multiplication_10(temp_5,temp_5,4);
 	//11
-	help.multiplication(temp_1, temp_4, temp_4);
+	help.multiplication_10(temp_1, temp_4, temp_4);
 	//12
-	help.multiplication(temp, temp_5, 2);
+	help.multiplication_10(temp, temp_5, 2);
 	if (help.is_Greater(temp_1, temp, 10)) {
 		help.soustraction_10(temp_1, temp_1, temp);
 	}
@@ -174,9 +171,9 @@ Point EllipticCurve::double_point(Point point) {
 		help.soustraction_10(temp_1, p, temp_1);
 	}
 	//13
-	help.multiplication(temp_2, temp_2, temp_2);
+	help.multiplication_10(temp_2, temp_2, temp_2);
 	//14
-	help.multiplication(temp_2, temp_2, 8);
+	help.multiplication_10(temp_2, temp_2, 8);
 	//15
 	if (help.is_Greater(temp_5, temp_1, 10)) {
 		help.soustraction_10(temp_5, temp_5, temp_1);
@@ -186,7 +183,7 @@ Point EllipticCurve::double_point(Point point) {
 		help.soustraction_10(temp_5, p, temp_5);
 	}
 	//16
-	help.multiplication(temp_5, temp_4, temp_5);
+	help.multiplication_10(temp_5, temp_4, temp_5);
 	//17
 	if (help.is_Greater(temp_5, temp_2, 10)) {
 		help.soustraction_10(temp_2, temp_5, temp_2);
@@ -236,20 +233,20 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 	unsigned char temp_01[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
 
 	if (!help.isEqual(temp_z2, temp_01,10)) {
-		help.addition(temp_6, temp_00, temp_z2);
-		help.multiplication(temp_7, temp_6, temp_6);
-		help.multiplication(temp_1, temp_1, temp_7);
-		help.multiplication(temp_7, temp_6, temp_7);
-		help.multiplication(temp_2, temp_2, temp_7);
+		help.addition_10(temp_6, temp_00, temp_z2);
+		help.multiplication_10(temp_7, temp_6, temp_6);
+		help.multiplication_10(temp_1, temp_1, temp_7);
+		help.multiplication_10(temp_7, temp_6, temp_7);
+		help.multiplication_10(temp_2, temp_2, temp_7);
 	}
 	//7
-	help.multiplication(temp_7, temp_3, temp_3);
+	help.multiplication_10(temp_7, temp_3, temp_3);
 	//8
-	help.multiplication(temp_4, temp_4, temp_7);
+	help.multiplication_10(temp_4, temp_4, temp_7);
 	//9
-	help.multiplication(temp_7, temp_3, temp_7);
+	help.multiplication_10(temp_7, temp_3, temp_7);
 	//10
-	help.multiplication(temp_5, temp_5, temp_7);
+	help.multiplication_10(temp_5, temp_5, temp_7);
 	//11
 	if (help.is_Greater(temp_1, temp_4, 10)) {
 		help.soustraction_10(temp_4, temp_1, temp_4);
@@ -276,7 +273,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		}
 	}
 	//14
-	help.multiplication(temp, temp_1, 2);
+	help.multiplication_10(temp, temp_1, 2);
 	if (help.is_Greater(temp, temp_4, 10)) {
 		help.soustraction_10(temp_1, temp, temp_4);
 	}
@@ -285,7 +282,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_1, p, temp_1);
 	}
 	//15
-	help.multiplication(temp, temp_2, 2);
+	help.multiplication_10(temp, temp_2, 2);
 	if (help.is_Greater(temp, temp_5, 10)) {
 		help.soustraction_10(temp_2, temp, temp_5);
 	}
@@ -296,18 +293,18 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
     //16
 
 	if (!help.isEqual(temp_z2, temp_01,10)) {
-		help.multiplication(temp_3, temp_3, temp_6);
+		help.multiplication_10(temp_3, temp_3, temp_6);
 	}
 	//17
-	help.multiplication(temp_3, temp_3, temp_4);
+	help.multiplication_10(temp_3, temp_3, temp_4);
 	//18
-	help.multiplication(temp_7, temp_4, temp_4);
+	help.multiplication_10(temp_7, temp_4, temp_4);
 	//19
-	help.multiplication(temp_4, temp_4, temp_7);
+	help.multiplication_10(temp_4, temp_4, temp_7);
 	//20
-	help.multiplication(temp_7, temp_1, temp_7);
+	help.multiplication_10(temp_7, temp_1, temp_7);
 	//21
-	help.multiplication(temp_1, temp_5, temp_5);
+	help.multiplication_10(temp_1, temp_5, temp_5);
 	//22
 	if (help.is_Greater(temp_1, temp_7, 10)) {
 		help.soustraction_10(temp_1, temp_1, temp_7);
@@ -317,7 +314,7 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_1, p, temp_1);
 	}
 	//23
-	help.multiplication(temp, temp_1, 2);
+	help.multiplication_10(temp, temp_1, 2);
 	if (help.is_Greater(temp_7, temp, 10)) {
 		help.soustraction_10(temp_7, temp_7, temp);
 	}
@@ -326,9 +323,9 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_7, p, temp_7);
 	}
 	//24
-	help.multiplication(temp_5, temp_5, temp_7);
+	help.multiplication_10(temp_5, temp_5, temp_7);
 	//25
-	help.multiplication(temp_4, temp_2, temp_4);
+	help.multiplication_10(temp_4, temp_2, temp_4);
 	//26
 	if (help.is_Greater(temp_5, temp_4, 10)) {
 		help.soustraction_10(temp_2, temp_5, temp_4);
@@ -354,8 +351,8 @@ Point EllipticCurve::toAffine(unsigned char *x, unsigned char *y, unsigned char 
 	unsigned char temp_z2[10]; help.init(temp_z2, 10);
 	unsigned char temp_z3[10]; help.init(temp_z3, 10);
 
-	help.multiplication(temp_z2, z, z);
-	help.multiplication(temp_z3, temp_z2, z);
+	help.multiplication_10(temp_z2, z, z);
+	help.multiplication_10(temp_z3, temp_z2, z);
 
 	help.modular_division(temp_x, x, temp_z2);
 	help.modular_division(temp_y, y, temp_z3);

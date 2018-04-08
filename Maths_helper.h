@@ -10,16 +10,21 @@ public:
 	unsigned char*  get_p();
 	void set_p(unsigned char *p);
 
-	void addition(unsigned char *out, unsigned char *in1, unsigned char *in2);
-	void addition(unsigned char *out, unsigned char *in1, unsigned int n);
+	void addition_10(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void addition_20(unsigned char *out, unsigned char *in1, unsigned char *in2);
+
+	void addition_10(unsigned char *out, unsigned char *in1, unsigned int n);
+	void addition_20(unsigned char *out, unsigned char *in1, unsigned int n);
 
 	void soustraction_10(unsigned char *out, unsigned char *in1, unsigned char *in2);
 	void soustraction_10(unsigned char *out, unsigned char *in1, unsigned int n);
 
 	void soustraction_20(unsigned char *out, unsigned char *in1, unsigned char *in2);
 
-	void multiplication(unsigned char *out, unsigned char *in1, unsigned char *in2);
-	void multiplication(unsigned char *out, unsigned char *in, int n);
+	void multiplication_20(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void multiplication_10(unsigned char *out, unsigned char *in1, unsigned char *in2);
+	void multiplication_10(unsigned char *out, unsigned char *in, int n);
+	void multiplication_20(unsigned char *out, unsigned char *in, int n);
 
 	void modular_division(unsigned char *out, unsigned char *in, int n);
 	void modular_division(unsigned char *out, unsigned char *in1, unsigned char *in2);
@@ -30,7 +35,6 @@ public:
 	void modulo_10(unsigned char *in);
 	void modulo_20(unsigned char *in);
 
-	void modular_inverse(unsigned char *out, unsigned char *in);
 	void modular_inverse(unsigned char *out, int n);
 
 	void intToHexa(unsigned char *out, unsigned int n);
