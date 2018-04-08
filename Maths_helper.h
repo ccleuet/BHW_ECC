@@ -39,7 +39,9 @@ public:
 
 	void intToHexa(unsigned char *out, unsigned int n);
 	bool is_Greater(unsigned char *in1, unsigned char *in2, int n);
-	void shift_left(unsigned char *in, unsigned int n);
+
+	void shift_left_20(unsigned char *in, unsigned int n);
+	void shift_left_10(unsigned char *in, unsigned int n);
 	void init(unsigned char *in, int n);
 
 	void tenTo_20hexa(unsigned char *out, unsigned char *in);
