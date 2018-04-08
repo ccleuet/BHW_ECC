@@ -200,7 +200,7 @@ Point EllipticCurve::double_point(Point point) {
 }
 
 Point EllipticCurve::add_point(Point p1, Point p2) {
-	Maths_helper help = Maths_helper(p);
+	Maths_helper help = Maths_helper(this->get_p());
 
 	unsigned char *x1 = p1.get_x();
 	unsigned char *y1 = p1.get_y();
@@ -338,14 +338,14 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_2, p, temp_2);
 	}
 	//27
-	help.division(temp_2, temp_2, 2);
+	help.modular_division(temp_2, temp_2, 2);
 	//28-29-30
 	return toAffine(temp_1, temp_2, temp_3);
 }
 
 Point EllipticCurve::toAffine(unsigned char *x, unsigned char *y, unsigned char *z) {
 
-	Maths_helper help = Maths_helper(p);
+	Maths_helper help = Maths_helper(this->get_p());
 
 	unsigned char temp_x[10]; help.init(temp_x, 10);
 	unsigned char temp_y[10]; help.init(temp_y, 10);
