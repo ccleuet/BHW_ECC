@@ -161,7 +161,7 @@ Point EllipticCurve::double_point(Point point) {
 	//9	
 	help.multiplication(temp_5, temp_1, temp_2);
 	//10
-	help.multiplication(temp_5, temp_4, temp_5);
+	help.multiplication(temp_5,temp_5,4);
 	//11
 	help.multiplication(temp_1, temp_4, temp_4);
 	//12
@@ -220,6 +220,8 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 
 	unsigned char temp_6[10]; help.init(temp_6, 10);
 	unsigned char temp_7[10]; help.init(temp_6, 10);
+
+	unsigned char temp_z2[10]; help.init(temp_z2, 10);
 	//1-2-3-4-5
 	for (int i = 0; i < 10; i++) {
 		temp_1[i] = x1[i];
@@ -227,14 +229,14 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		temp_3[i] = z1[i];
 		temp_4[i] = x2[i];
 		temp_5[i] = y2[i];
-		temp_6[i] = z2[i];
+		temp_z2[i] = z2[i];
 	}
 	//6
 	unsigned char temp_00[10]; 	help.init(temp_00, 10);
 	unsigned char temp_01[10] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x01 };
 
-	if (!help.isEqual(temp_6, temp_01,10)) {
-		help.addition(temp_6, temp_1, temp_6);
+	if (!help.isEqual(temp_z2, temp_01,10)) {
+		help.addition(temp_6, temp_00, temp_z2);
 		help.multiplication(temp_7, temp_6, temp_6);
 		help.multiplication(temp_1, temp_1, temp_7);
 		help.multiplication(temp_7, temp_6, temp_7);
@@ -292,10 +294,8 @@ Point EllipticCurve::add_point(Point p1, Point p2) {
 		help.soustraction_10(temp_2, p, temp_2);
 	}
     //16
-	for (int i = 0; i < 10; i++) {
-		temp[i] = z1[i];
-	}
-	if (!help.isEqual(temp, temp_01,10)) {
+
+	if (!help.isEqual(temp_z2, temp_01,10)) {
 		help.multiplication(temp_3, temp_3, temp_6);
 	}
 	//17
